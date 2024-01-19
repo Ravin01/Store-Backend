@@ -39,9 +39,6 @@ app.use('/reset', resetPasswordRoute)
 
 app.use('/products', productsRoute)
 
-// app.use('/messages', messageRouter)
-
-// app.use('/profile', profileRouter)
 
 
 
@@ -51,20 +48,6 @@ app.get('/', (req,res)=>{
 })
 
 
-// io.on('connection', (Socket) => {
-//     // io.on('join-room', (data) =>{
-//     //     Socket.join(data)
-//     //     console.log(`user ${Socket.id} has joined the room`)
-//     // })
-//     console.log('user connected')
-//     io.on('send-message', (data) =>{
-//         console.log('Message', data)
-//         io.emit('received-message', data)
-//     })
-//     io.on('disconnect', ()=>{
-//         console.log('Disconnected')
-//     })
-// })
 
 
 
