@@ -23,14 +23,30 @@ registerRoute.post("/", async (req, res) => {
                 console.log(err)
                 res.status(409).send(err)
             }else{
-                const newUser = await registrationModel.create({...payload, password : hash, userId : v4()})
+              if(payload.userEmail === 'admin@gmail.com'){
+                const newUser = await registrationModel.create({...payload, password : hash, userId : v4(), role : 1})
                 if(newUser){
                     const newRegis = newUser.toObject()
                     const accessToken = jwt.sign(newRegis, process.env.JWT_SECRET,{
                         expiresIn : '1d'
                     })
                     res.send({...newRegis, accessToken})
+                }else{
+                  res.status(409).send({msg : 'problem with crating user'})
                 }
+              }else{
+                const newUser = await registrationModel.create({...payload, password : hash, userId : v4(), role : 0})
+                if(newUser){
+                    const newRegis = newUser.toObject()
+                    const accessToken = jwt.sign(newRegis, process.env.JWT_SECRET,{
+                        expiresIn : '1d'
+                    })
+                    res.send({...newRegis, accessToken})
+                }else{
+                  res.status(409).send({msg : 'problem with crating user'})
+                }
+              }
+                
             }
         })
       })

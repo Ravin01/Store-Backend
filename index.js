@@ -10,9 +10,7 @@ import { registerRoute } from "./routes/auth/register.js";
 import { resetPasswordRoute } from "./routes/auth/reset.js";
 import { forgotPassRoute } from "./routes/auth/forgotpass.js";
 import { productsRoute } from "./routes/products/products.js";
-// import { getContactsRoute } from "./routes/chat/contacts.js";
-// import { messageRouter } from "./routes/chat/message.js";
-// import { profileRouter } from "./routes/chat/profile.js";
+import { normalUserRoute } from "./routes/products/NormalUser.js";
 
 
 dotenv.config()
@@ -38,6 +36,8 @@ app.use('/forgot', forgotPassRoute)
 app.use('/reset', resetPasswordRoute)
 
 app.use('/products', productsRoute)
+
+app.use('/normalUser', normalUserRoute)
 
 
 

@@ -9,7 +9,8 @@ productsRoute.get('/', async(req,res)=>{
     try{
             const product = await productsModel.find({})
             if(product){
-                res.send(product)
+                // console.log(product[0].products)
+                res.send(product[0].products)
             }else{
                 res.status(401).send({msg : 'error with getting product'})
             }
@@ -25,6 +26,7 @@ productsRoute.post('/:userEmail', async(req,res)=>{
     const payload = req.body
     const {userEmail} = req.params
     // payload = {
+        // productName = string,
     //     productType = string,
     //     price = Number,
     //     image = string
@@ -34,6 +36,7 @@ productsRoute.post('/:userEmail', async(req,res)=>{
             const product = await productsModel.findOne({userEmail : userEmail})
             if(product){
                 let moreProduct = {
+                    productName : payload.productName,
                     productId : v4(),
                     productType : payload.productType,
                     price : payload.price,
@@ -50,6 +53,7 @@ productsRoute.post('/:userEmail', async(req,res)=>{
                     userEmail : userEmail,
                     products : [
                         {
+                            productName : payload.productName,
                             productId : v4(),
                             productType : payload.productType,
                             price : payload.price,
@@ -76,6 +80,29 @@ productsRoute.post('/:userEmail', async(req,res)=>{
 
 
 
+productsRoute.get('/:userEmail/:productId', async(req,res)=>{
+    const {userEmail, productId} = req.params
+
+    try{
+        if(userEmail === 'admin@gmail.com'){
+            const data = await productsModel.findOne({userEmail : userEmail})
+            let filterData = data.products.find((i) => i.productId === productId)
+            if(filterData){
+                console.log(filterData)
+                res.send(filterData)
+            }else{
+                res.status(402).send({msg : 'error while getting data'})
+            }
+        }else{
+            res.status(409).send({msg : 'your are not allowed to get product details'})
+        }
+    }catch(err){
+        console.log(err)
+        res.status(500).send(err)
+    }
+})
+
+
 productsRoute.put('/:userEmail/:productId', async(req,res)=>{
     const payload = req.body
     const {userEmail, productId} = req.params
@@ -87,6 +114,7 @@ productsRoute.put('/:userEmail/:productId', async(req,res)=>{
     try{
         if(userEmail === 'admin@gmail.com'){
             let product = {
+                productName : payload.productName,
                 productId : productId,
                 productType : payload.productType,
                 price : payload.price,

@@ -1,5 +1,5 @@
 import Express from "express";
-import { normalUserModel, registrationModel } from "../../db/dbModels";
+import { normalUserModel, registrationModel } from "../../db/dbModels.js";
 
 export const normalUserRoute = Express.Router()
 
@@ -73,7 +73,7 @@ normalUserRoute.post('/cart/:userEmail', async(req,res)=>{
 })
 
 
-normalUserRoute.post('/productBought/:userEmail', async(req,res)=>{
+normalUserRoute.post('/history/:userEmail', async(req,res)=>{
     const payload = req.body
     const {userEmail} = req.params
     try{

@@ -17,6 +17,7 @@ export const registrationSchema = mongoose.Schema({
     type: "string",
     required: true,
   },
+  role : Number
 });
 
 
@@ -28,14 +29,16 @@ export const normalUserSchema = mongoose.Schema({
     required : true
   },
   cart : [{
+    productName : 'string',
     productId : "string",
-    price : Number,
+    price : 'string',
     productType : "string",
     image : "string"
   }],
   productBought : [{
+    productName : 'string',
     productId : "string",
-    price : Number,
+    price : 'string',
     productType : "string",
     image : "string"
   }]
@@ -50,9 +53,10 @@ export const productsSchema = mongoose.Schema({
   userEmail : 'string',
   products : [
     {
+      productName : 'string',
       productId : 'string',
       productType : 'string',
-      price : Number,
+      price : 'string',
       image : 'string'
     },
   ],
