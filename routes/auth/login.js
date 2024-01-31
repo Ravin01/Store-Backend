@@ -12,7 +12,7 @@ loginRoute.post("/", async (req, res) => {
   try {
     const checkUser = await registrationModel.findOne(
       { userEmail: payload.userEmail },
-      { _id: 0, password: 1, userName: 1, userEmail: 1 }
+      { _id: 0, password: 1, userName: 1, userEmail: 1, role : 1 }
     );
     if (checkUser) {
       bcrypt.compare(payload.password, checkUser.password, (err, result) => {

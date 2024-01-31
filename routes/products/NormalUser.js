@@ -38,7 +38,7 @@ normalUserRoute.post('/cart/:userEmail', async(req,res)=>{
                 }else{
                     const addCart = await normalUserModel.findOneAndUpdate({userEmail : userEmail}, {$push : {cart : payload}})
                     if(addCart){
-                        res.send({msg : 'added successfully'})
+                        res.status(200).send({msg : 'added successfully'})
                     }else{
                         res.status(402).send({msg : 'error while adding cart'})
                     }
@@ -48,6 +48,7 @@ normalUserRoute.post('/cart/:userEmail', async(req,res)=>{
                     userEmail : userEmail,
                     cart : [
                         {
+                            productName : payload.productName,
                             productId : payload.productId,
                             price : payload.price,
                             productType : payload.productType,
@@ -60,7 +61,7 @@ normalUserRoute.post('/cart/:userEmail', async(req,res)=>{
                 if(created){
                     res.send({msg : 'created'})
                 }else{
-                    res.status(401).send({msg : 'error while creating cart'})
+                    res.status(402).send({msg : 'error while creating cart'})
                 }
             }
         }else{
@@ -90,7 +91,7 @@ normalUserRoute.post('/history/:userEmail', async(req,res)=>{
                     if(addProduct){
                         res.send({msg : 'product Bought successfully'})
                     }else{
-                        res.status(402).send({msg : 'error while adding cart'})
+                        res.status(402).send({msg : 'error while buy product'})
                     }
             }else{
                 const newCart = {
@@ -98,6 +99,7 @@ normalUserRoute.post('/history/:userEmail', async(req,res)=>{
                     cart : [],
                     productBought : [
                         {
+                            productName : payload.productName,
                             productId : payload.productId,
                             price : payload.price,
                             productType : payload.productType,
@@ -107,7 +109,7 @@ normalUserRoute.post('/history/:userEmail', async(req,res)=>{
                 }
                 const created = await normalUserModel.create(newCart)
                 if(created){
-                    res.send({msg : 'created'})
+                    res.send({msg : 'Product bought successfully'})
                 }else{
                     res.status(401).send({msg : 'error while creating productBought'})
                 }

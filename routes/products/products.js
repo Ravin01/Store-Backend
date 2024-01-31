@@ -94,7 +94,15 @@ productsRoute.get('/:userEmail/:productId', async(req,res)=>{
                 res.status(402).send({msg : 'error while getting data'})
             }
         }else{
-            res.status(409).send({msg : 'your are not allowed to get product details'})
+            const data = await productsModel.find()
+            const allData = data.map(entry => entry.products).flat()
+            let singleProduct = allData.find((d) => d.productId === productId)
+            if(singleProduct){
+                console.log(singleProduct)
+                res.send(singleProduct)
+            }else{
+                res.status(402).send({msg : 'error while getting data'})
+            }
         }
     }catch(err){
         console.log(err)
